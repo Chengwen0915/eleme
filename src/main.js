@@ -6,6 +6,9 @@ import router from './router'
 import axios from 'axios'
 import 'lib-flexible/flexible'
 import './common/css/reset.css'
+import './common/fonts/iconfont.css'
+import './common/css/index.less'
+
 Vue.prototype.axios = axios
 
 Vue.config.productionTip = false
