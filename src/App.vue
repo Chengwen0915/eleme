@@ -33,7 +33,9 @@ export default {
         console.log(res.data.data)
       }).catch(res => {
         console.log(res);
-      })
+      });
+
+      this.$router.push('goods'); // 页面加载时跳转
   }
 };
 </script>
