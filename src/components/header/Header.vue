@@ -222,7 +222,7 @@ export default {
     .bulletin-title {
       display: inline-block;
       vertical-align: top;
-      margin-top: 10px;
+      margin-top: 9px;
       width: 22px;
       height: 12px;
       .bg-img("header/bulletin");

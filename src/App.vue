@@ -30,9 +30,10 @@ export default {
   created(){
     this.axios.get('/api/seller').then(res =>{
       this.seller = res.data.data;
-        console.log(res.data.data)
+        //console.log(res.data.data)
       }).catch(res => {
-        console.log(res);
+        //console.log(res);
+      alert(res)
       });
 
       this.$router.push('goods'); // 页面加载时跳转
