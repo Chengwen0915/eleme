@@ -3,7 +3,8 @@
 
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
-        <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex === index}" @click="selectMenu(index)">
+        <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex === index}"
+            @click="selectMenu(index)">
           <span class="text border-1px">
             <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
           </span>
@@ -33,10 +34,8 @@
                   <span v-show="food.oldPrice" class="old-price">¥{{food.oldPrice}}</span>
                 </div>
 
-                <div class="add-reduce">
-                  <img v-show="count" src="./remove_circle_outline.svg" alt="" class="add" @click="removeCount">
-                  <input v-show="count" v-model="count" type="text" name="" id="">
-                  <img src="./add_circle.svg" alt="" class="remove" @click="addCount">
+                <div class="cart-wrapper">
+                  <cartControl :food="food"></cartControl>
                 </div>
               </div>
             </li>
@@ -44,7 +43,7 @@
         </li>
       </ul>
     </div>
-    <cart></cart>
+    <cart :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice" :select-goods='selectGoods'></cart>
 
   </div>
 </template>
@@ -52,6 +51,7 @@
 <script>
   import Bscroll from 'better-scroll';
   import cart from '../cart/cart'
+  import cartControl from '../CartControl/CartControl'
   export default {
     props: ["seller"],
     data(){
@@ -60,11 +60,12 @@
         classMap: [],
         count: 0,
         listHeight: [],
-        scrollY:0
+        scrollY: 0
       }
     },
-    components:{
-        cart
+    components: {
+      cart,
+      cartControl
     },
     created(){
       this.classMap = ["decrease", "discount", "special", "invoice", "guarantee"];
@@ -81,32 +82,44 @@
 
       this.$router.push('goods'); // 页面加载时跳转
     },
-    computed:{
-        currentIndex(){
-            for (let i = 0; i < this.listHeight.length; i++) {
-              let height1 = this.listHeight[i];
-              let height2 = this.listHeight[i + 1];
-              if(!height2 ||(this.scrollY >= height1 && this.scrollY < height2)){
-                  return i;
-              }
-            }
-            return 0;
+    computed: {
+      currentIndex(){
+        for (let i = 0; i < this.listHeight.length; i++) {
+          let height1 = this.listHeight[i];
+          let height2 = this.listHeight[i + 1];
+          if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+            return i;
+          }
         }
+        return 0;
+      },
+      selectGoods(){
+        let foods = [];
+        this.goods.forEach((good) => {
+          good.foods.forEach((food) => {
+            if (food.count) {
+              foods.push(food);
+            }
+          })
+        });
+        return foods;
+      }
     },
     methods: {
       _initScroll(){
         this.menuScroll = new Bscroll(this.$refs.menuWrapper, {
-            click:true
+          click: true
         });
         this.foodsScroll = new Bscroll(this.$refs.foodsWrapper, {
-            probeType:3
+          probeType: 3,
+          click: true
         });
-        this.foodsScroll.on("scroll",(pos) => {
+        this.foodsScroll.on("scroll", (pos) => {
           this.scrollY = Math.abs(Math.round(pos.y))
         });
       },
       _calcLastHeight(){
-          // 计算右侧每个栏目的距离顶部的高度，放进数组。
+        // 计算右侧每个栏目的距离顶部的高度，放进数组。
         let foodList = this.$refs.foodsWrapper.getElementsByClassName("food-list-hook");
         let height = 0;
         this.listHeight.push(height);
@@ -116,19 +129,13 @@
           this.listHeight.push(height);
         }
       },
-      addCount(){
-        this.count++;
-      },
-      removeCount(){
-        this.count > 0 ? this.count-- : this.count;
-      },
       selectMenu(index){
         // 获取所有菜单项
         let foodList = this.$refs.foodsWrapper.getElementsByClassName("food-list-hook");
         //获取点击的dom
         let el = foodList[index];
         // 右侧滚到对应对应的位置
-        this.foodsScroll.scrollToElement(el,300);
+        this.foodsScroll.scrollToElement(el, 300);
       }
     }
   }
@@ -155,13 +162,13 @@
         height: 54px;
         line-height: 14px;
         padding: 0 12px;
-        &.current{
+        &.current {
           position: relative;
           margin-top: -1px;
-          z-index:10;
+          z-index: 10;
           background-color: #fff;
           font-weight: 700;
-          .text{
+          .text {
             .border-none();
           }
         }
@@ -197,7 +204,6 @@
           .border-1px(rgba(7, 17, 27, .1));
         }
       }
-
 
     }
     .foods-wrapper {
@@ -286,30 +292,10 @@
                 color: rgb(143, 153, 159);
               }
             }
-            .add-reduce {
+            .cart-wrapper {
               position: absolute;
               right: 0;
               bottom: 0;
-              width: 75px;
-              height: 25px;
-              background-color: red;
-              font-size: 0;
-              .add, .remove {
-                width: 24px;
-                height: 24px;
-                font-size: 24px;
-                line-height: 24px;
-                color: rgb(0, 160, 220);
-              }
-              input {
-                width: 24px;
-                font-size: 10px;
-                line-height: 24px;
-                color: rgb(147, 153, 159);
-                vertical-align: top;
-                border: none;
-                text-align: center;
-              }
             }
           }
         }
