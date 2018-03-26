@@ -95,13 +95,20 @@
       },
       selectGoods(){
         let foods = [];
-        this.goods.forEach((good) => {
-          good.foods.forEach((food) => {
-            if (food.count) {
-              foods.push(food);
+        /* this.goods.forEach((good) => {
+         good.foods.forEach((food) => {
+         if (food.count) {
+         foods.push(food);
+         }
+         })
+         });*/
+        for (let i = 0; i < this.goods.length; i++) {
+          for (let j = 0; j < this.goods[i].foods.length; j++) {
+            if (this.goods[i].foods[j].count) {
+              foods.push(this.goods[i].foods[j]);
             }
-          })
-        });
+          }
+        }
         return foods;
       }
     },

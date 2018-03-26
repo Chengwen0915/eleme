@@ -27,8 +27,6 @@
             }else{
               this.food.count++;
             }
-          console.log("click");
-
         },
         reduceCart(){
             if(this.food.count){
