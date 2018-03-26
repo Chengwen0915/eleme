@@ -1,11 +1,11 @@
 <template>
     <div class="cartControl">
       <!--<transition name="move">-->
-        <div class="cart-decrease iconfont icon-reduce" v-show="food.count > 0" @click='reduceCart'></div>
+        <div class="cart-decrease iconfont icon-reduce" v-show="food.count > 0" @click.stop.prevent='reduceCart'></div>
       <!--</transition>-->
       <div class="cart-count" v-show="food.count > 0">{{food.count}}</div>
 
-      <div class="cart-add iconfont icon-add" @click="addCart"></div>
+      <div class="cart-add iconfont icon-add" @click.stop.prevent="addCart"></div>
     </div>
 </template>
 
@@ -29,7 +29,7 @@
             }
         },
         reduceCart(){
-            if(this.food.count){
+            if(this.food.count >0){
               this.food.count--;
             }
 

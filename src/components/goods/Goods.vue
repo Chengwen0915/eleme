@@ -15,11 +15,11 @@
 
     <div class="foods-wrapper" ref="foodsWrapper">
       <ul>
-        <li v-for="(item,index) in goods" class="food-list food-list-hook" :key="index">
+        <li v-for="(item,index) in goods" class="food-list food-list-hook" :key="index" >
           <h1 class="title">{{item.name}}</h1>
           <ul>
-            <li v-for="(food,index1) in item.foods" class="food-item border-1px">
-              <div class="icon">
+            <li v-for="(food,index1) in item.foods" class="food-item border-1px" @click="selectedFood(food)">
+              <div class="icon" >
                 <img :src="food.icon" alt="">
               </div>
               <div class="content">
@@ -44,6 +44,7 @@
       </ul>
     </div>
     <cart :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice" :select-goods='selectGoods'></cart>
+    <food :food="selectFood" ref="food"></food>
 
   </div>
 </template>
@@ -51,6 +52,7 @@
 <script>
   import Bscroll from 'better-scroll';
   import cart from '../cart/cart'
+  import food from '../food/Food'
   import cartControl from '../CartControl/CartControl'
   export default {
     props: ["seller"],
@@ -60,12 +62,14 @@
         classMap: [],
         count: 0,
         listHeight: [],
-        scrollY: 0
+        scrollY: 0,
+        selectFood:{}
       }
     },
     components: {
       cart,
-      cartControl
+      cartControl,
+      food
     },
     created(){
       this.classMap = ["decrease", "discount", "special", "invoice", "guarantee"];
@@ -143,6 +147,10 @@
         let el = foodList[index];
         // 右侧滚到对应对应的位置
         this.foodsScroll.scrollToElement(el, 300);
+      },
+      selectedFood(food){
+        this.selectFood = food;
+        this.$refs.food.show();
       }
     }
   }
