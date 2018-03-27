@@ -36,7 +36,7 @@ export default {
       alert(res)
       });
 
-      this.$router.push('goods'); // 页面加载时跳转
+      //this.$router.push('goods'); // 页面加载时跳转
   }
 };
 </script>
