@@ -50,7 +50,7 @@
 
 <script>
   import BScroll from 'better-scroll';
-  import cartControl from '../CartControl/CartControl'
+  import cartControl from '../cart-control/CartControl'
   export default {
 //props: ["deliveryPrice", 'minPrice', 'selectGoods'],
     props: {

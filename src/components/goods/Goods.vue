@@ -53,7 +53,7 @@
   import BScroll from 'better-scroll';
   import Cart from '../cart/Cart'
   import Food from '../food/Food'
-  import CartControl from '../CartControl/CartControl'
+  import CartControl from '../cart-control/CartControl'
   export default {
     props: ["seller"],
     data(){

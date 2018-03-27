@@ -72,7 +72,7 @@
 <script>
   import BScroll from 'better-scroll';
   import Vue from 'vue';
-  import CartControl from '../cartControl/CartControl'
+  import CartControl from '../cart-control/CartControl'
   import split from '../split/Split'
   import ratingSelect from '../ratingSelect/RatingSelect'
 

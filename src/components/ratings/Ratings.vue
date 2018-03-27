@@ -99,7 +99,6 @@
     created(){
       this.axios.get('/api/ratings').then(res => {
         this.ratings = res.data.data;
-        console.log(this.ratings);
         this.$nextTick( () => {
           this.scroll = new BScroll(this.$refs.ratings,{
             click:true
