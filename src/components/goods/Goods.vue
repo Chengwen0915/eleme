@@ -18,7 +18,7 @@
         <li v-for="(item,index) in goods" class="food-list food-list-hook" :key="index" >
           <h1 class="title">{{item.name}}</h1>
           <ul>
-            <li v-for="(food,index1) in item.foods" class="food-item border-1px" @click="selectedFood(food)">
+            <li v-for="(food,index1) in item.foods" class="food-item border-1px" :key="index1" @click="selectedFood(food)">
               <div class="icon" >
                 <img :src="food.icon" alt="">
               </div>
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="cart-wrapper">
-                  <cartControl :food="food"></cartControl>
+                  <CartControl :food="food"></CartControl>
                 </div>
               </div>
             </li>
@@ -43,17 +43,17 @@
         </li>
       </ul>
     </div>
-    <cart :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice" :select-goods='selectGoods'></cart>
-    <food :food="selectFood" ref="food"></food>
+    <Cart :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice" :select-goods='selectGoods'></Cart>
+    <Food :food="selectFood" ref="food"></Food>
 
   </div>
 </template>
 
 <script>
-  import Bscroll from 'better-scroll';
-  import cart from '../cart/cart'
-  import food from '../food/Food'
-  import cartControl from '../CartControl/CartControl'
+  import BScroll from 'better-scroll';
+  import Cart from '../cart/Cart'
+  import Food from '../food/Food'
+  import CartControl from '../CartControl/CartControl'
   export default {
     props: ["seller"],
     data(){
@@ -67,9 +67,9 @@
       }
     },
     components: {
-      cart,
-      cartControl,
-      food
+      Cart,
+      CartControl,
+      Food
     },
     created(){
       this.classMap = ["decrease", "discount", "special", "invoice", "guarantee"];
@@ -99,13 +99,6 @@
       },
       selectGoods(){
         let foods = [];
-        /* this.goods.forEach((good) => {
-         good.foods.forEach((food) => {
-         if (food.count) {
-         foods.push(food);
-         }
-         })
-         });*/
         for (let i = 0; i < this.goods.length; i++) {
           for (let j = 0; j < this.goods[i].foods.length; j++) {
             if (this.goods[i].foods[j].count) {
@@ -118,10 +111,10 @@
     },
     methods: {
       _initScroll(){
-        this.menuScroll = new Bscroll(this.$refs.menuWrapper, {
+        this.menuScroll = new BScroll(this.$refs.menuWrapper, {
           click: true
         });
-        this.foodsScroll = new Bscroll(this.$refs.foodsWrapper, {
+        this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
           probeType: 3,
           click: true
         });

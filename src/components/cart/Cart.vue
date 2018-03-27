@@ -49,7 +49,7 @@
 </template>
 
 <script>
-  import Bscroll from 'better-scroll';
+  import BScroll from 'better-scroll';
   import cartControl from '../CartControl/CartControl'
   export default {
 //props: ["deliveryPrice", 'minPrice', 'selectGoods'],
@@ -112,7 +112,7 @@
           this.fold = true;
         } else {
             if(!this.fold){
-              this.listScroll = new Bscroll(this.$refs.listWrapper, {
+              this.listScroll = new BScroll(this.$refs.listWrapper, {
                 click: true
               });
             }
